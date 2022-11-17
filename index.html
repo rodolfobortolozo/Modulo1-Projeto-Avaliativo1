@@ -4,27 +4,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="assets/js/app.js" defer type="module"></script>
     <title>DEVinKnowledge</title>
 </head>
 <body>
-    <main id="main">
-        <div>
-            <h1>DEVinKnowledge</h1>
+    <main id="main" class="container flex">
+        <div class="column">
+            <div>
+                <h1>DEVinKnowledge</h1>
+            </div>
             <form id="form">
                 <input type="hidden" name="id" id="id">
                 <div>
                     <label for="titulo">Título</label>
-                    <input type="text" name="titulo" id="titulo" minlength="8" maxlength="64" required>
+                    <input type="text" name="titulo" id="titulo" class="input" minlength="8" maxlength="64" required>
                 </div>
                 <div>
                     <label for="linguagem">Linguagem/Skill</label>
-                    <input type="text" name="linguagem" id="linguagem" minlength="2" maxlength="16" required>
+                    <input type="text" name="linguagem" id="linguagem" class="input" minlength="2" maxlength="16" required>
                 </div>
                 <div>
                     <label for="categoria">Categoria</label>
-                    <select name="categoria" id="categoria" required>
+                    <select name="categoria" id="categoria" class="input" required>
                         <option value="">Selecione uma Categoria</option>
                         <!-- <option value="FrontEnd">FrontEnd</option>
                         <option value="BackEnd">BackEnd</option>
@@ -34,18 +37,18 @@
                 </div>
                 <div>
                     <label for="descricao">Descrição</label>
-                    <textarea name="descricao" id="descricao" cols="30" rows="10" minlength="16" maxlength="512" required></textarea>
+                    <textarea name="descricao" id="descricao" class="input" cols="30" rows="10" minlength="16" maxlength="512" required></textarea>
                 </div>
                 <div>
                     <label for="video">Vídeo do YouTube</label>
-                    <input type="text" name="video" id="video">
+                    <input type="text" name="video" id="video" class="input">
                 </div>
                 <button type="submit">Salvar</button>
                 <button type="reset">Limpar</button>
             </form>
         </div>
-        <div>
-            <h2>Dicas</h2>
+        <div class="flex">
+            <h1>Dicas</h1>
             <ul id="dicas"></ul>
         </div>
     </main>

@@ -1,0 +1,33 @@
+h1 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	text-align: center;
+	margin: 20px 0 0 0;
+	font-size: 1.5em;
+	font-weight: normal;
+    padding: 10px;
+}
+
+label{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-left: 20px;
+}
+
+.container {
+	margin: 0 auto;
+}
+
+.flex {
+	display: flex;
+}
+
+.column {
+	background : steelblue;
+    height: 100vh;
+}  
+
+.input{
+    margin-left: 10px;
+    min-width: 90%;
+    padding: 5px;
+}
+
