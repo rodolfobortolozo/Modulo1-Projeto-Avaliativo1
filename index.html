@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,12 +10,12 @@
     <script src="assets/js/app.js" defer type="module"></script>
     <title>DEVinKnowledge</title>
 </head>
+
 <body>
-    <main id="main" class="container flex">
-        <div class="column">
-            <div>
-                <h1>DEVinKnowledge</h1>
-            </div>
+    <div class="container">
+        <div class="cadastro">
+
+            <h1>DEVinKnowledge</h1>
             <form id="form">
                 <input type="hidden" name="id" id="id">
                 <div>
@@ -23,34 +24,71 @@
                 </div>
                 <div>
                     <label for="linguagem">Linguagem/Skill</label>
-                    <input type="text" name="linguagem" id="linguagem" class="input" minlength="2" maxlength="16" required>
+                    <input type="text" name="linguagem" id="linguagem" class="input" minlength="2" maxlength="16"
+                        required>
                 </div>
                 <div>
                     <label for="categoria">Categoria</label>
                     <select name="categoria" id="categoria" class="input" required>
                         <option value="">Selecione uma Categoria</option>
-                        <!-- <option value="FrontEnd">FrontEnd</option>
+                        <option value="FrontEnd">FrontEnd</option>
                         <option value="BackEnd">BackEnd</option>
                         <option value="FullStack">FullStack</option>
-                        <option value="Comportamental/Soft">Comportamental/Soft</option> -->
+                        <option value="Comportamental/Soft">Comportamental/Soft</option> 
                     </select>
                 </div>
                 <div>
                     <label for="descricao">Descrição</label>
-                    <textarea name="descricao" id="descricao" class="input" cols="30" rows="10" minlength="16" maxlength="512" required></textarea>
+                    <textarea name="descricao" id="descricao" class="input" cols="30" rows="10" minlength="16"
+                        maxlength="512" required></textarea>
                 </div>
                 <div>
                     <label for="video">Vídeo do YouTube</label>
-                    <input type="text" name="video" id="video" class="input">
+                    <input type="url" name="video" id="video" placeholder="https://www.youtube.com/watch?v=xAHxPE3NL6M"
+                        pattern="https://.*" class="input">
                 </div>
                 <button type="submit">Salvar</button>
                 <button type="reset">Limpar</button>
             </form>
         </div>
-        <div class="flex">
-            <h1>Dicas</h1>
-            <ul id="dicas"></ul>
+        <div class="maindicas">
+            <div class="card">
+                <div class="cards">
+                    <span>Total</span>
+                    <span>1</span>
+                </div>
+                <div class="cards">
+                    <span>FrontEnd</span>
+                    <span>1</span>
+                </div>
+                <div class="cards">
+                    <span>BackEnd</span>
+                    <span>1</span>
+                </div>
+                <div class="cards">
+                    <span>FullStack</span>
+                    <span>1</span>
+                </div>
+                <div class="cards">
+                    <span>Softkill</span>
+                    <span>1</span>
+                </div>
+            </div>
+            <div>
+                <input type="text" id="pesquisar" placeholder="Pesquisar">
+            </div>
+            <div class="containerknow">
+
+                
+                 <ul id="dicas"></ul> 
+
+                 <section>
+                    <ul id="total" class="list"></ul>
+                  </section>
+            </div>
         </div>
-    </main>
+
+    </div>
 </body>
-</html> 
+
+</html>

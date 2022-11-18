@@ -2,25 +2,6 @@ const form = document.getElementById('form');
 const ulDicas = document.getElementById('dicas');
 const sCategoria = document.getElementById('categoria');
 const URL_API = 'http://localhost:3000';
-const categorias = ['Selecione uma Categoria', 'FrontEnd', 'BackEnd','FullStack', 'Comportamental/Soft'];
-
-const renderizeCategoria = (selecionado = 0) =>{
-
-    //limpo para renderizar Novamente
-    while (sCategoria.length) {
-        sCategoria.remove(0);
-    };
-
-    for (let i = 0; i<categorias.length; i++) {
-
-        let elem = document.createElement('option');
-        if ( i != 0){ elem.value =  i } else { elem.value = '' };
-        elem.text = categorias[i];
-        if(selecionado == i){ elem.selected = 'selected' };
-        sCategoria.appendChild(elem);
-
-    }
-}
 
 //Cadastrar Alterar
 const cadastrarAltDica = async (dica, metodo)=> {
@@ -59,7 +40,7 @@ const renderizeDicas = (dicas) => {
   
     item.id = `dica_${dicas.id}`;
   
-    span.innerText = `${dicas.titulo} - ${categorias[dicas.categoria]} `;
+    span.innerText = `${dicas.titulo} - ${dicas.categoria} `;
   
     button.innerText = 'Excluir';
     button.addEventListener('click', () => excluirDica(dicas.id));
@@ -104,7 +85,8 @@ const editarDicaHtml = async (id) => {
     linguagem.value = dica.linguagem
   
     const categoria = document.getElementById('categoria');
-    renderizeCategoria(dica.categoria);
+    //renderizeCategoria(dica.categoria);
+    categoria.value = dica.categoria;
     
     const descricao = document.getElementById('descricao');
     descricao.value = dica.descricao;
@@ -117,8 +99,47 @@ const buscarDicas = async()=> {
     const resultado = await fetch(`${URL_API}/dicas`);
     const dicas = await resultado.json();
     renderizeDicasHtml(dicas);
-    renderizeCategoria();
+    renderizeTotais(dicas);
+
 }
+
+const filtrarDicas = (dicas, categoria) => {
+    console.log(dicas);
+    const dicasFiltradas = dicas.filter((dica) => null);
+    return dicasFiltradas;
+  };
+
+  function obterTotal(dicas, categorias) {
+    const dicasFiltradas = filtrarDicas([ dicas ], categorias);
+    return dicasFiltradas.length;
+  }
+
+async function renderizeTotais(dicas) {
+    const lista = document.getElementById('total');
+    lista.innerHTML = '';
+    
+    for(let dica of await dicas) {
+        const totalCategoria = obterTotal(dicas, dica.categoria);
+      const li = document.createElement('li');
+      li.classList.add('list-item', 'list-item-total');
+        
+    //   li.addEventListener('click', () => renderizaDicasFiltradasPorCategoria(dicas.categoria));
+  
+      const titulo = document.createElement('h2');
+      titulo.innerText = dica.categoria;
+      titulo.classList.add('total-title');
+      li.appendChild(titulo);
+  
+      const total = document.createElement('p');
+      total.innerText = totalCategoria;
+      total.classList.add('subtitle');
+      li.appendChild(total);
+  
+      lista.appendChild(li);
+    };
+  }
+
+
 
 const submitForm = async(event)=> {
 
@@ -147,12 +168,14 @@ const submitForm = async(event)=> {
                 const dicaAlterada = await cadastrarAltDica(dica,'PUT');
                 buscarDicas();
                 form.reset();
+                codigo.value = '';
                 alert('Dica Alterada na Base de conhecimento!');
 
             }else{
                 const dicaCadastrada = await cadastrarAltDica(dica,'POST');
                 buscarDicas();
                 form.reset();
+                codigo.value='';
                 alert('Dica Cadastrada na Base de conhecimento!');
             }
 
