@@ -1,10 +1,29 @@
 const form = document.getElementById('form');
-const ulDicas = document.getElementById('div-dicas');
+const dvDicas = document.getElementById('div-dicas');
 const sCategoria = document.getElementById('categoria');
 const btnPesquisar = document.getElementById('btn-pesquisar');
 let dicas = [];
 const URL_API = 'http://localhost:3000';
+const CATEGORIAS = ['Selecione uma Categoria', 'FrontEnd', 'BackEnd','FullStack', 'Comportamental/Soft'];
 
+//Renredizar Select Dinamico
+const renderizeCategoria = (selecionado = 0) =>{
+
+    //limpo para renderizar Novamente
+    while (sCategoria.length) {
+        sCategoria.remove(0);
+    };
+
+    for (let i = 0; i<CATEGORIAS.length; i++) {
+
+        let elem = document.createElement('option');
+        if ( i != 0){ elem.value =  CATEGORIAS[i] } else { elem.value = '' };
+        elem.text = CATEGORIAS[i];
+        if(selecionado === CATEGORIAS[i]){ elem.selected = 'selected' };
+        sCategoria.appendChild(elem);
+
+    }
+}
 
 //Cadastrar Alterar
 const cadastrarAltDica = async (dica, metodo)=> {
@@ -64,12 +83,12 @@ const renderizeDicas = (dicas) => {
     item.appendChild(buttonEditar);
     item.appendChild(button);
   
-    ulDicas.appendChild(item);
+    dvDicas.appendChild(item);
 };
 
 //Renderizar Dicas
 const renderizeDicasHtml = (dicas)=> {
-    ulDicas.innerHTML = '';
+    dvDicas.innerHTML = '';
     dicas.forEach((dicas) => {
         renderizeDicas(dicas);
     });
@@ -96,8 +115,8 @@ const editarDicaHtml = async (id) => {
     linguagem.value = dica.linguagem
   
     const categoria = document.getElementById('categoria');
-    //renderizeCategoria(dica.categoria);
-    categoria.value = dica.categoria;
+    renderizeCategoria(dica.categoria);
+    //categoria.value = dica.categoria;
     
     const descricao = document.getElementById('descricao');
     descricao.value = dica.descricao;
@@ -126,18 +145,22 @@ const obterTotal = (dicas, categoria) => {
     return total? total : 0;
 };
 
-async function renderizeTotais(dicas) {
+const totalGeral = () =>{
+    
+}
+const renderizeTotais = (dicas) => {
     const lista = document.getElementById('total');
     lista.innerHTML = '';
     
-    for(let dica of await dicas) {
+    for(let i=1;i<CATEGORIAS.length; i++){
+    //for(let dica of await dicas) {
     
-      const totalCategoria = obterTotal(dicas, dica.categoria);
+      const totalCategoria = obterTotal(dicas, CATEGORIAS[i]);
       const li = document.createElement('li');
       li.classList.add('list-item', 'list-item-total');
          
       const titulo = document.createElement('h2');
-      titulo.innerText = dica.categoria;
+      titulo.innerText = CATEGORIAS[i];
       titulo.classList.add('total-title');
       li.appendChild(titulo);
   
@@ -184,7 +207,7 @@ const submitForm = async(event)=> {
             console.log(dica);
 
             if(codigo.value>0){
-                
+                //Alterar
                 const dicaAlterada = await cadastrarAltDica(dica,'PUT');
                 buscarDicas();
                 form.reset();
@@ -192,6 +215,7 @@ const submitForm = async(event)=> {
                 alert('Dica Alterada na Base de conhecimento!');
 
             }else{
+                //Cadastrar
                 const dicaCadastrada = await cadastrarAltDica(dica,'POST');
                 buscarDicas();
                 form.reset();
