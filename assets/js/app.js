@@ -1,7 +1,10 @@
 const form = document.getElementById('form');
-const ulDicas = document.getElementById('dicas');
+const ulDicas = document.getElementById('div-dicas');
 const sCategoria = document.getElementById('categoria');
+const btnPesquisar = document.getElementById('btn-pesquisar');
+let dicas = [];
 const URL_API = 'http://localhost:3000';
+
 
 //Cadastrar Alterar
 const cadastrarAltDica = async (dica, metodo)=> {
@@ -19,7 +22,7 @@ const cadastrarAltDica = async (dica, metodo)=> {
   
     const dicaCadastrada = await resultado.json();      
     return dicaCadastrada;
-}
+};
 
 //Deletar
 const excluirDica = async (id) => {
@@ -29,18 +32,25 @@ const excluirDica = async (id) => {
     // const item = document.getElementById(`dica_${id}`);
     // item.remove();
     buscarDicas();
-}
+};
 
 //Renderizar Dicas
 const renderizeDicas = (dicas) => {
-    const item = document.createElement('li');
-    const span = document.createElement('span');
+    const item = document.createElement('div');
+    const titulo = document.createElement('span');
+    const categoria = document.createElement('span');
+    const descricao = document.createElement('span');
+
     const button = document.createElement('button');
     const buttonEditar = document.createElement('button');
-  
-    item.id = `dica_${dicas.id}`;
-  
-    span.innerText = `${dicas.titulo} - ${dicas.categoria} `;
+
+    item.classList.add('listacards');
+
+    titulo.innerHTML = `<p><strong>Linguagem/Skill</strong> - ${dicas.titulo}</p>`;
+    categoria.innerHTML = `<p><strong>Categoria</strong> - ${dicas.categoria}</p><br />`;
+    descricao.innerHTML = `${dicas.descricao}`;
+    
+    
   
     button.innerText = 'Excluir';
     button.addEventListener('click', () => excluirDica(dicas.id));
@@ -48,28 +58,29 @@ const renderizeDicas = (dicas) => {
     buttonEditar.innerText = 'Editar';
     buttonEditar.addEventListener('click', () => editarDicaHtml(dicas.id));
   
-    item.appendChild(span);
+    item.appendChild(titulo);
+    item.appendChild(categoria);
+    item.appendChild(descricao);
     item.appendChild(buttonEditar);
     item.appendChild(button);
   
     ulDicas.appendChild(item);
-}
+};
 
 //Renderizar Dicas
 const renderizeDicasHtml = (dicas)=> {
     ulDicas.innerHTML = '';
-    
     dicas.forEach((dicas) => {
         renderizeDicas(dicas);
     });
-}
+};
 
 //Retornar a Dica
 const buscarDica = async (id) => {
     const resultado = await fetch(`${URL_API}/dicas/${id}`);
     const dica = await resultado.json();
     return dica;
-}
+};
 
 //Editar
 const editarDicaHtml = async (id) => {
@@ -93,38 +104,38 @@ const editarDicaHtml = async (id) => {
     
     const video = document.getElementById('video');
     video.value = dica.video;
-}
+};
 
 const buscarDicas = async()=> {
     const resultado = await fetch(`${URL_API}/dicas`);
-    const dicas = await resultado.json();
+    dicas = await resultado.json();
     renderizeDicasHtml(dicas);
     renderizeTotais(dicas);
 
-}
+};
 
-const filtrarDicas = (dicas, categoria) => {
-    console.log(dicas);
-    const dicasFiltradas = dicas.filter((dica) => null);
+const filtrarDicas = (dica, categoria) => {
+    const dicasFiltradas = dica.filter((dica) => dica.categoria === categoria);
     return dicasFiltradas;
-  };
+};
 
-  function obterTotal(dicas, categorias) {
-    const dicasFiltradas = filtrarDicas([ dicas ], categorias);
-    return dicasFiltradas.length;
-  }
+const obterTotal = (dicas, categoria) => {
+    const dicasFiltradas = filtrarDicas(dicas, categoria);
+    let total = dicasFiltradas.length;
+    console.log(total);
+    return total? total : 0;
+};
 
 async function renderizeTotais(dicas) {
     const lista = document.getElementById('total');
     lista.innerHTML = '';
     
     for(let dica of await dicas) {
-        const totalCategoria = obterTotal(dicas, dica.categoria);
+    
+      const totalCategoria = obterTotal(dicas, dica.categoria);
       const li = document.createElement('li');
       li.classList.add('list-item', 'list-item-total');
-        
-    //   li.addEventListener('click', () => renderizaDicasFiltradasPorCategoria(dicas.categoria));
-  
+         
       const titulo = document.createElement('h2');
       titulo.innerText = dica.categoria;
       titulo.classList.add('total-title');
@@ -137,9 +148,18 @@ async function renderizeTotais(dicas) {
   
       lista.appendChild(li);
     };
-  }
+};
 
+const filtrarTitulo = () => {
 
+    const titulo = document.getElementById('pesquisar').value;
+
+    const dicasFiltradas = dicas.filter((dica) =>
+      dica.titulo.toLowerCase().includes(titulo.toLowerCase())
+    );
+  
+    renderizeDicasHtml(dicasFiltradas);
+};
 
 const submitForm = async(event)=> {
 
@@ -184,7 +204,8 @@ const submitForm = async(event)=> {
            
         }
 
-}
+};
 
 window.addEventListener('load', buscarDicas);
 form.addEventListener('submit', submitForm);
+btnPesquisar.addEventListener('click', filtrarTitulo);
