@@ -45,7 +45,7 @@ button {
 .container {
 	display: flex;
     min-height: 100vh;
-    width: 80%;
+       
 }
 
 .containerknow {
@@ -54,7 +54,7 @@ button {
     justify-content: center;
     align-items: center;
     padding-top: 10px;
-    overflow-y: scroll;
+    margin: 0 auto;
     
 }
 
@@ -70,6 +70,8 @@ button {
     flex-direction: column;  
     height: 100%; 
     width: 100%; 
+    justify-content: space-between;
+    padding: 20px;
 }
 
 .card {

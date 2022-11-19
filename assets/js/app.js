@@ -4,7 +4,7 @@ const sCategoria = document.getElementById('categoria');
 const btnPesquisar = document.getElementById('btn-pesquisar');
 let dicas = [];
 const URL_API = 'http://localhost:3000';
-const CATEGORIAS = ['Selecione uma Categoria', 'FrontEnd', 'BackEnd','FullStack', 'Comportamental/Soft'];
+const CATEGORIAS = ['Selecione uma Categoria', 'FrontEnd', 'BackEnd','FullStack', 'Soft Skills'];
 
 //Renredizar Select Dinamico
 const renderizeCategoria = (selecionado = 0) =>{
@@ -130,6 +130,7 @@ const buscarDicas = async()=> {
     dicas = await resultado.json();
     renderizeDicasHtml(dicas);
     renderizeTotais(dicas);
+    renderizeCategoria();
 
 };
 
@@ -149,15 +150,15 @@ const totalGeral = () =>{
     
 }
 const renderizeTotais = (dicas) => {
-    const lista = document.getElementById('total');
+    const lista = document.getElementById('dicas');
     lista.innerHTML = '';
     
     for(let i=1;i<CATEGORIAS.length; i++){
     //for(let dica of await dicas) {
-    
+      
       const totalCategoria = obterTotal(dicas, CATEGORIAS[i]);
-      const li = document.createElement('li');
-      li.classList.add('list-item', 'list-item-total');
+      const li = document.createElement('div');
+      li.classList.add('cards');
          
       const titulo = document.createElement('h2');
       titulo.innerText = CATEGORIAS[i];

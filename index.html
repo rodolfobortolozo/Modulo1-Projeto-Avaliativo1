@@ -21,26 +21,21 @@
                 <input type="hidden" name="id" id="id">
                 <div>
                     <label for="titulo">Título</label>
-                    <input type="text" name="titulo" id="titulo" class="input" minlength="8" maxlength="64" required>
+                    <input type="text" name="titulo" id="titulo" placeholder="Título" class="input" minlength="8" maxlength="64" required>
                 </div>
                 <div>
                     <label for="linguagem">Linguagem/Skill</label>
-                    <input type="text" name="linguagem" id="linguagem" class="input" minlength="2" maxlength="16"
+                    <input type="text" name="linguagem" id="linguagem" placeholder="Linguagem/Skill"  class="input" minlength="2" maxlength="16"
                         required>
                 </div>
                 <div>
                     <label for="categoria">Categoria</label>
                     <select name="categoria" id="categoria" class="input" required>
-                        <option value="">Selecione uma Categoria</option>
-                        <option value="FrontEnd">FrontEnd</option>
-                        <option value="BackEnd">BackEnd</option>
-                        <option value="FullStack">FullStack</option>
-                        <option value="Comportamental/Soft">Comportamental/Soft</option> 
                     </select>
                 </div>
                 <div>
                     <label for="descricao">Descrição</label>
-                    <textarea name="descricao" id="descricao" class="input" cols="30" rows="10" minlength="16"
+                    <textarea name="descricao" id="descricao" placeholder="Descrição" class="input" cols="30" rows="10" minlength="16"
                         maxlength="512" required></textarea>
                 </div>
                 <div>
@@ -53,28 +48,9 @@
             </form>
         </div>
         <div class="maindicas">
-            <div class="card">
-                <div class="cards">
-                    <span>Total</span>
-                    <span>1</span>
-                </div>
-                <div class="cards">
-                    <span>FrontEnd</span>
-                    <span>1</span>
-                </div>
-                <div class="cards">
-                    <span>BackEnd</span>
-                    <span>1</span>
-                </div>
-                <div class="cards">
-                    <span>FullStack</span>
-                    <span>1</span>
-                </div>
-                <div class="cards">
-                    <span>Softkill</span>
-                    <span>1</span>
-                </div>
-            </div>
+            <div class="card" id="dicas">
+        </div>
+            
             <div id="pesquisa">
                 <input type="text" id="pesquisar" placeholder="Pesquisar">
                 <button id="btn-pesquisar">🔍</button>
@@ -82,14 +58,7 @@
             </div>
             <div id="div-dicas" class="containerknow">
             </div>   
-                 <ul id="dicas"></ul> 
-
-                 <section>
-                    <ul id="total" class="list"></ul>
-                  </section>
-            
-        </div>
-
+        </div>        
     </div>
 </body>
 
