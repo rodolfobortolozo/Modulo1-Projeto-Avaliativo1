@@ -1,53 +1,66 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/image/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="assets/js/app.js" defer type="module"></script>
     <title>DEVinKnowledge</title>
 </head>
+
 <body>
-    <main id="main">
-        <div>
+    <div class="container">
+        <div class="cadastro">
+
             <h1>DEVinKnowledge</h1>
             <form id="form">
                 <input type="hidden" name="id" id="id">
                 <div>
                     <label for="titulo">Título</label>
-                    <input type="text" name="titulo" id="titulo" minlength="8" maxlength="64" required>
+                    <input type="text" name="titulo" id="titulo" placeholder="Título" class="input" minlength="8" maxlength="64" required>
                 </div>
                 <div>
                     <label for="linguagem">Linguagem/Skill</label>
-                    <input type="text" name="linguagem" id="linguagem" minlength="2" maxlength="16" required>
+                    <input type="text" name="linguagem" id="linguagem" placeholder="Linguagem/Skill"  class="input" minlength="2" maxlength="16"
+                        required>
                 </div>
                 <div>
                     <label for="categoria">Categoria</label>
-                    <select name="categoria" id="categoria" required>
-                        <option value="">Selecione uma Categoria</option>
-                        <!-- <option value="FrontEnd">FrontEnd</option>
-                        <option value="BackEnd">BackEnd</option>
-                        <option value="FullStack">FullStack</option>
-                        <option value="Comportamental/Soft">Comportamental/Soft</option> -->
+                    <select name="categoria" id="categoria" class="input" required>
                     </select>
                 </div>
                 <div>
                     <label for="descricao">Descrição</label>
-                    <textarea name="descricao" id="descricao" cols="30" rows="10" minlength="16" maxlength="512" required></textarea>
+                    <textarea name="descricao" id="descricao" placeholder="Descrição" class="input" cols="30" rows="10" minlength="16"
+                        maxlength="512" required></textarea>
                 </div>
                 <div>
                     <label for="video">Vídeo do YouTube</label>
-                    <input type="text" name="video" id="video">
+                    <input type="url" name="video" id="video" placeholder="https://www.youtube.com/watch?v=xAHxPE3NL6M"
+                        pattern="https://.*" class="input">
                 </div>
-                <button type="submit">Salvar</button>
-                <button type="reset">Limpar</button>
+                <div class="botoes-form">
+                    <button type="submit" class="salvar">Salvar</button>
+                    <button type="reset" class="reset">Limpar</button>
+                </div>                    
             </form>
         </div>
-        <div>
-            <h2>Dicas</h2>
-            <ul id="dicas"></ul>
-        </div>
-    </main>
+        <div class="main-card">
+            <ul class="card" id="dicas">
+            </ul>
+            <div class="pesquisa">
+                <input type="text" id="pesquisar" placeholder="Pesquisar">
+                <button id="btn-pesquisar">🔍</button>
+                <button id="btn-limpar">❌</button>
+            </div>
+            <div id="div-know" class="container-know">
+            </div>   
+        </div>        
+    </div>
 </body>
-</html> 
+
+</html>
