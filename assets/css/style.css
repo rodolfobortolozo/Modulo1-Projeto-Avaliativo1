@@ -22,7 +22,7 @@ input, textarea, select {
   background-color: white;
   padding-top: 10px;
   padding-bottom: 10px;
-  box-shadow: -1px 1px 1px 1px black
+  box-shadow: -1px 1px 1px 1px black;
 }
 
 button {
@@ -54,7 +54,6 @@ button {
     justify-content: center;
     align-items: center;
     padding-top: 10px;
-    margin: 0 auto;
     
 }
 
@@ -83,10 +82,11 @@ button {
     
 }
 
-.card-knows{
-    padding: 30px;
-	margin: 5px;
+.card-totalizadores{
+    padding: 20px;
+	margin: 1px;
 	text-align: center;
+    width: 110px;
 	font-size: 1.5em;
     border-radius: 10px;
     box-shadow: 2px 2px 2px 2px rgb(187, 187, 187);
@@ -94,7 +94,7 @@ button {
   
 }
 
-.lista-cards-knows{
+.lista-cards-conteudo{
     font-family: sans-serif;
     width: 70%; 
 	margin-top: 20px;
@@ -105,7 +105,7 @@ button {
     animation:opac 0.5s}@keyframes opac{from{opacity:0} to{opacity:1}
 }
 
-.lista-cards-knows> span > p > strong{
+.lista-cards-conteudo> span > p > strong{
     font-weight: bold;
 }
 
@@ -115,4 +115,29 @@ button {
     padding-bottom: 20px;
     justify-content: center;
     
+}
+
+.botoes-acoes{
+    float: right;
+    padding: 10px;
+}
+
+.botoes-form{
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.salvar{
+    background-color: green;
+    color: white;
+    width: 100%;
+    border: none;
+    margin-right: 5px;
+}
+.reset{
+    background-color: red;
+    color: white;
+    width: 100%;
+    border: none;
 }

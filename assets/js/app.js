@@ -1,3 +1,4 @@
+// #region Variaveis e Constantes
 const form = document.getElementById('form');
 const dvKnow = document.getElementById('div-know');
 const sCategoria = document.getElementById('categoria');
@@ -6,8 +7,9 @@ const btnLimpar = document.getElementById('btn-limpar');
 let dicas = [];
 const URL_API = 'http://localhost:3000';
 const CATEGORIAS = ['Selecione uma Categoria', 'FrontEnd', 'BackEnd','FullStack', 'Soft Skills'];
+// #endregion
 
-//Renredizar Select Dinamico
+//Renredizar Select Dinamico no carregamento da Pagina e ediçaõ
 const renderizeCategoria = (selecionado = 0) =>{
 
     //limpo para renderizar Novamente
@@ -27,84 +29,107 @@ const renderizeCategoria = (selecionado = 0) =>{
 }
 
 //Cadastrar Alterar
-const cadastrarAltDica = async (dica, metodo)=> {
-    console.log(dica.id);
+const cadastrarAlterar = async (knows, metodo)=> {
     let alt = '';
-    if(dica.id){
-       alt = `/${dica.id}`;     }
+
+    if(knows.id){
+       alt = `/${knows.id}`;
+    }
+
     const resultado = await fetch(`${URL_API}/dicas${alt}`, {
       method: metodo,
       headers: new Headers({
         'Content-Type': 'application/json',
       }),
-      body: JSON.stringify(dica),
+      body: JSON.stringify(knows),
     });
   
-    const dicaCadastrada = await resultado.json();      
-    return dicaCadastrada;
+    const cadastrado = await resultado.json();      
+    return cadastrado;
 };
 
 //Deletar
-const excluirDica = async (id) => {
+const excluir = async (id) => {
     await fetch(`${URL_API}/dicas/${id}`, {
       method: 'DELETE',
     });
-    // const item = document.getElementById(`dica_${id}`);
-    // item.remove();
-    buscarDicas();
+
+    buscarTodos();
+    
 };
 
 //Renderizar Dicas
-const renderizeDicas = (dicas) => {
+const renderizeknows = (know) => {
     const item = document.createElement('div');
     const titulo = document.createElement('span');
     const categoria = document.createElement('span');
     const descricao = document.createElement('span');
+    const divBotoes = document.createElement('div');
+    const imgEditar = document.createElement('img');
+    const imgExcluir = document.createElement('img');
+    const imgVideo = document.createElement('img');
+    const buttonVideo = document.createElement('button');
+    const linkVideo = document.createElement('a');
 
-    const button = document.createElement('button');
-    const buttonEditar = document.createElement('button');
+    item.classList.add('lista-cards-conteudo');
+    divBotoes.classList.add('botoes-acoes');
 
-    item.classList.add('lista-cards-knows');
-
-    titulo.innerHTML = `<p><strong>Linguagem/Skill</strong> - ${dicas.titulo}</p>`;
-    categoria.innerHTML = `<p><strong>Categoria</strong> - ${dicas.categoria}</p><br />`;
-    descricao.innerHTML = `${dicas.descricao}`;
+    titulo.innerHTML = `<p><strong>Linguagem/Skill</strong> - ${know.titulo}</p>`;
+    categoria.innerHTML = `<p><strong>Categoria</strong> - ${know.categoria}</p><br />`;
+    descricao.innerHTML = `${know.descricao}`;
     
-    
-  
-    button.innerText = 'Excluir';
-    button.addEventListener('click', () => excluirDica(dicas.id));
-  
-    buttonEditar.innerText = 'Editar';
-    buttonEditar.addEventListener('click', () => editarDicaHtml(dicas.id));
-  
+    imgExcluir.src ='assets/image/deletar.png';
+    imgExcluir.alt = 'Excluir';
+    imgExcluir.width = '32';
+    imgExcluir.height = '32';
+    imgExcluir.addEventListener('click', () => excluir(know.id));
+
+    imgEditar.src ='assets/image/editar.png';
+    imgEditar.alt = 'Editar';
+    imgEditar.width = '32';
+    imgEditar.height = '32';
+    imgEditar.addEventListener('click', () => editarKnowHtml(know.id));
+
+    linkVideo.href = know.video;
+    linkVideo.target = '_blank';
+    imgVideo.src ='assets/image/youtube.png';
+    imgVideo.alt = 'Video';  
+    imgVideo.width = '32';
+    imgVideo.height = '32';
+    linkVideo.appendChild(imgVideo);
+
     item.appendChild(titulo);
     item.appendChild(categoria);
     item.appendChild(descricao);
-    item.appendChild(buttonEditar);
-    item.appendChild(button);
+    item.appendChild(divBotoes);
+    divBotoes.appendChild(imgEditar );
+    divBotoes.appendChild(imgExcluir);
+    
+    if(know.video){
+        divBotoes.appendChild(linkVideo);    
+    }
   
     dvKnow.appendChild(item);
 };
 
 //Renderizar Dicas
-const renderizeDicasHtml = (dicas)=> {
+const renderizeKnowHtml = (know)=> {
     dvKnow.innerHTML = '';
-    dicas.forEach((dicas) => {
-        renderizeDicas(dicas);
+    know.forEach((knows) => {
+        renderizeknows(knows);
     });
 };
 
 //Retornar a Dica
-const buscarDica = async (id) => {
+const buscarKnow = async (id) => {
     const resultado = await fetch(`${URL_API}/dicas/${id}`);
-    const dica = await resultado.json();
-    return dica;
+    const know = await resultado.json();
+    return know;
 };
 
 //Editar
-const editarDicaHtml = async (id) => {
-    const dica = await buscarDica(id);
+const editarKnowHtml = async (id) => {
+    const dica = await buscarKnow(id);
   
     const codigo = document.getElementById('id');
     codigo.value = dica.id;
@@ -126,40 +151,49 @@ const editarDicaHtml = async (id) => {
     video.value = dica.video;
 };
 
-const buscarDicas = async()=> {
+const buscarTodos = async()=> {
     const resultado = await fetch(`${URL_API}/dicas`);
     dicas = await resultado.json();
-    renderizeDicasHtml(dicas);
+    renderizeKnowHtml(dicas);
     renderizeTotais(dicas);
     renderizeCategoria();
 
 };
 
-const filtrarDicas = (dica, categoria) => {
-    const dicasFiltradas = dica.filter((dica) => dica.categoria === categoria);
-    return dicasFiltradas;
+const filtrarTituloDescr = (knows, categoria) => {
+    const knowsFiltradas = knows.filter((know) => know.categoria === categoria);
+    return knowsFiltradas;
 };
 
-const obterTotal = (dicas, categoria) => {
-    const dicasFiltradas = filtrarDicas(dicas, categoria);
-    let total = dicasFiltradas.length;
-    console.log(total);
+const obterTotal = (know, categoria) => {
+    const knowFiltradas = filtrarTituloDescr(know, categoria);
+    let total = knowFiltradas.length;
     return total? total : 0;
 };
 
-const totalGeral = () =>{
-    
-}
-const renderizeTotais = (dicas) => {
+const renderizeTotais = (knows) => {
     const lista = document.getElementById('dicas');
     lista.innerHTML = '';
+
+    const li = document.createElement('li');
+    li.classList.add('card-totalizadores');
+       
+    const titulo = document.createElement('h2');
+    titulo.innerText = 'Total';
+    li.appendChild(titulo);
+
+    const total = document.createElement('p');
+    total.innerText = knows.length;
+    li.appendChild(total);
+
+    lista.appendChild(li);
     
     for(let i=1;i<CATEGORIAS.length; i++){
     //for(let dica of await dicas) {
       
-      const totalCategoria = obterTotal(dicas, CATEGORIAS[i]);
+      const totalCategoria = obterTotal(knows, CATEGORIAS[i]);
       const li = document.createElement('li');
-      li.classList.add('card-knows');
+      li.classList.add('card-totalizadores');
          
       const titulo = document.createElement('h2');
       titulo.innerText = CATEGORIAS[i];
@@ -171,6 +205,8 @@ const renderizeTotais = (dicas) => {
   
       lista.appendChild(li);
     };
+
+
 };
 
 const filtrarTitulo = () => {
@@ -179,11 +215,11 @@ const filtrarTitulo = () => {
 
     const dicasFiltradas = dicas.filter((dica) =>{
         //Junção par Pesquisar no titulo e Descrição
-      let know = dica.titulo.toLowerCase()+dica.descricao.toLowerCase();
+      let know = dica.titulo.toLowerCase() + dica.descricao.toLowerCase();
       return know.includes(titulo.toLowerCase())
     });
   
-    renderizeDicasHtml(dicasFiltradas);
+    renderizeKnowHtml(dicasFiltradas);
 };
 
 const submitForm = async(event)=> {
@@ -210,16 +246,16 @@ const submitForm = async(event)=> {
 
             if(codigo.value>0){
                 //Alterar
-                const dicaAlterada = await cadastrarAltDica(dica,'PUT');
-                buscarDicas();
+                const dicaAlterada = await cadastrarAlterar(dica,'PUT');
+                buscarTodos();
                 form.reset();
                 codigo.value = '';
                 alert('Dica Alterada na Base de conhecimento!');
 
             }else{
                 //Cadastrar
-                const dicaCadastrada = await cadastrarAltDica(dica,'POST');
-                buscarDicas();
+                const dicaCadastrada = await cadastrarAlterar(dica,'POST');
+                buscarTodos();
                 form.reset();
                 codigo.value='';
                 alert('Dica Cadastrada na Base de conhecimento!');
@@ -234,11 +270,12 @@ const submitForm = async(event)=> {
 
 const limparPesquisa = () => {
     document.getElementById('pesquisar').value = '';
-
-    buscarDicas();
+    buscarTodos();
 }
 
-window.addEventListener('load', buscarDicas);
+// #region Eventos
+window.addEventListener('load', buscarTodos);
 form.addEventListener('submit', submitForm);
 btnPesquisar.addEventListener('click', filtrarTitulo);
-btnLimpar.addEventListener('click', limparPesquisa)
+btnLimpar.addEventListener('click', limparPesquisa);
+// #endregion
