@@ -50,6 +50,7 @@ const cadastrarAlterar = async (knows, metodo)=> {
 
 //Deletar
 const excluir = async (id) => {
+
     await fetch(`${URL_API}/dicas/${id}`, {
       method: 'DELETE',
     });
@@ -60,6 +61,7 @@ const excluir = async (id) => {
 
 //Renderizar Dicas
 const renderizeknows = (know) => {
+
     const item = document.createElement('div');
     const titulo = document.createElement('span');
     const categoria = document.createElement('span');
@@ -122,6 +124,7 @@ const renderizeKnowHtml = (know)=> {
 
 //Retornar a Dica
 const buscarKnow = async (id) => {
+
     const resultado = await fetch(`${URL_API}/dicas/${id}`);
     const know = await resultado.json();
     return know;
@@ -129,6 +132,7 @@ const buscarKnow = async (id) => {
 
 //Editar
 const editarKnowHtml = async (id) => {
+
     const dica = await buscarKnow(id);
   
     const codigo = document.getElementById('id');
@@ -152,6 +156,7 @@ const editarKnowHtml = async (id) => {
 };
 
 const buscarTodos = async()=> {
+
     const resultado = await fetch(`${URL_API}/dicas`);
     dicas = await resultado.json();
     renderizeKnowHtml(dicas);
@@ -161,17 +166,20 @@ const buscarTodos = async()=> {
 };
 
 const filtrarTituloDescr = (knows, categoria) => {
+
     const knowsFiltradas = knows.filter((know) => know.categoria === categoria);
     return knowsFiltradas;
 };
 
 const obterTotal = (know, categoria) => {
+
     const knowFiltradas = filtrarTituloDescr(know, categoria);
     let total = knowFiltradas.length;
     return total? total : 0;
 };
 
 const renderizeTotais = (knows) => {
+
     const lista = document.getElementById('dicas');
     lista.innerHTML = '';
 
@@ -269,6 +277,7 @@ const submitForm = async(event)=> {
 };
 
 const limparPesquisa = () => {
+    
     document.getElementById('pesquisar').value = '';
     buscarTodos();
 }
