@@ -26,11 +26,9 @@ input, textarea, select {
 }
 
 button {
-
     border-radius: 10px;
     padding: 8px;
     cursor: pointer;
-    transition: opacity 0.3s;
   }
 
 ::placeholder {
@@ -39,16 +37,18 @@ button {
 }
 
 #pesquisar{
-    width: 90%;
+    width: 80%;
 }
 
 .container {
 	display: flex;
     min-height: 100vh;
+    flex-direction: row;
+    flex-wrap: nowrap;
        
 }
 
-.containerknow {
+.container-know {
 	display: flex;
     flex-direction: column;
     justify-content: center;
@@ -59,51 +59,60 @@ button {
 }
 
 .cadastro {
-	/* flex: 1; */
 	background: rgb(0, 0, 63);
     color: white;
     padding: 10px;
 }
 
-.maindicas {
+.main-card {
     display: flex;
     flex-direction: column;  
     height: 100%; 
     width: 100%; 
     justify-content: space-between;
-    padding: 20px;
 }
 
 .card {
     display: flex;
     justify-content: space-around;
     height: 100%; 
-    width: 100%; 
+    width: calc(100% - 100px); 
+    flex-wrap: wrap;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    
 }
 
-.cards{
+.card-knows{
     padding: 30px;
 	margin: 5px;
 	text-align: center;
 	font-size: 1.5em;
     border-radius: 10px;
     box-shadow: 2px 2px 2px 2px rgb(187, 187, 187);
+    
   
 }
-.listacards{
-	margin: 5px;
-    border-radius: 10px;
-    padding: 30px;
-    box-shadow: 2px 2px 2px 2px rgb(187, 187, 187);
-    width: 90%;
 
+.lista-cards-knows{
+    font-family: sans-serif;
+    width: 70%; 
+	margin-top: 20px;
+    border: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 2px rgb(187, 187, 187);
+    padding-top: 20px;
+    animation:opac 0.5s}@keyframes opac{from{opacity:0} to{opacity:1}
 }
 
-.listacards > span > p > strong{
+.lista-cards-knows> span > p > strong{
     font-weight: bold;
 }
 
 .pesquisa{
+    display: flex;
     margin: 5px;
-    padding: 50px;
+    padding-bottom: 20px;
+    justify-content: center;
+    
 }

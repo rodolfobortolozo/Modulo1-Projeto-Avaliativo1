@@ -1,7 +1,8 @@
 const form = document.getElementById('form');
-const dvDicas = document.getElementById('div-dicas');
+const dvKnow = document.getElementById('div-know');
 const sCategoria = document.getElementById('categoria');
 const btnPesquisar = document.getElementById('btn-pesquisar');
+const btnLimpar = document.getElementById('btn-limpar');
 let dicas = [];
 const URL_API = 'http://localhost:3000';
 const CATEGORIAS = ['Selecione uma Categoria', 'FrontEnd', 'BackEnd','FullStack', 'Soft Skills'];
@@ -63,7 +64,7 @@ const renderizeDicas = (dicas) => {
     const button = document.createElement('button');
     const buttonEditar = document.createElement('button');
 
-    item.classList.add('listacards');
+    item.classList.add('lista-cards-knows');
 
     titulo.innerHTML = `<p><strong>Linguagem/Skill</strong> - ${dicas.titulo}</p>`;
     categoria.innerHTML = `<p><strong>Categoria</strong> - ${dicas.categoria}</p><br />`;
@@ -83,12 +84,12 @@ const renderizeDicas = (dicas) => {
     item.appendChild(buttonEditar);
     item.appendChild(button);
   
-    dvDicas.appendChild(item);
+    dvKnow.appendChild(item);
 };
 
 //Renderizar Dicas
 const renderizeDicasHtml = (dicas)=> {
-    dvDicas.innerHTML = '';
+    dvKnow.innerHTML = '';
     dicas.forEach((dicas) => {
         renderizeDicas(dicas);
     });
@@ -157,17 +158,15 @@ const renderizeTotais = (dicas) => {
     //for(let dica of await dicas) {
       
       const totalCategoria = obterTotal(dicas, CATEGORIAS[i]);
-      const li = document.createElement('div');
-      li.classList.add('cards');
+      const li = document.createElement('li');
+      li.classList.add('card-knows');
          
       const titulo = document.createElement('h2');
       titulo.innerText = CATEGORIAS[i];
-      titulo.classList.add('total-title');
       li.appendChild(titulo);
   
       const total = document.createElement('p');
       total.innerText = totalCategoria;
-      total.classList.add('subtitle');
       li.appendChild(total);
   
       lista.appendChild(li);
@@ -178,9 +177,11 @@ const filtrarTitulo = () => {
 
     const titulo = document.getElementById('pesquisar').value;
 
-    const dicasFiltradas = dicas.filter((dica) =>
-      dica.titulo.toLowerCase().includes(titulo.toLowerCase())
-    );
+    const dicasFiltradas = dicas.filter((dica) =>{
+        //Junção par Pesquisar no titulo e Descrição
+      let know = dica.titulo.toLowerCase()+dica.descricao.toLowerCase();
+      return know.includes(titulo.toLowerCase())
+    });
   
     renderizeDicasHtml(dicasFiltradas);
 };
@@ -231,6 +232,13 @@ const submitForm = async(event)=> {
 
 };
 
+const limparPesquisa = () => {
+    document.getElementById('pesquisar').value = '';
+
+    buscarDicas();
+}
+
 window.addEventListener('load', buscarDicas);
 form.addEventListener('submit', submitForm);
 btnPesquisar.addEventListener('click', filtrarTitulo);
+btnLimpar.addEventListener('click', limparPesquisa)
