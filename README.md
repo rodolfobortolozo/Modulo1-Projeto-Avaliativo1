@@ -1,5 +1,9 @@
 # Módulo 1 - Projeto Avaliativo 1 da Turma DevInHouse Turma Philips
 
+## Projeto desenvolvido para a avaliação no módulo Inicial de Full-Stack, onde era preciso desenvolver uma aplicação para criar uma base de conhecimento.
+Desenvolvido em HTML e Javascript consumindo uma Api por fecth.
+
+
 # Configuração JSON Server Fake API
 
 ##1.Instalando via npm
